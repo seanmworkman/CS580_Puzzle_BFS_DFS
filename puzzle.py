@@ -201,7 +201,7 @@ def bfs(initial):
             # if neighbor not in explored:
                 frontier.addtoq(neighbor)
                 frontierList.append(neighbor)       
-    return False
+    return "FAILURE"
 
 # Depth First Search
 # Stack: LIFO
@@ -235,7 +235,7 @@ def dfs(initial):
                 # print("ADDED TO STACK")
                 frontier.add(neighbor)
                 frontierList.append(neighbor)
-    return False
+    return "FAILURE"
 
 def runSearch(mode):
     if mode.lower() == "bfs":
