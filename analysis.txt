@@ -1,0 +1,4 @@
+It is hard to compare the two search algorithms on the puzzle because of how long they both take to run. Especially on the 24-puzzle.
+While they both take a very long time to run it is clear by looking at the printed states that both searches are working properly.
+When run on the 8-puzzle each finished in similar time. It is also difficult to compare since each run starts at a randomized state which greatly affects the run times of each.
+BFS was run much longer than DFS, which is why there is more of an output.

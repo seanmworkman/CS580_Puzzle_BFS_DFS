@@ -15,13 +15,7 @@ goal = [
     [16, 17, 18, 19, 20],
     [21, 22, 23, 24, 0]
 ]
-# initial = [
-#     [9, 24, 3, 5, 17],
-#     [6, 0, 13, 19, 10],
-#     [11, 21, 12, 1, 20],
-#     [16, 4, 14, 12, 15],
-#     [8, 18, 23, 2, 7]
-# ]
+
 # rows = 3
 # columns = 3
 # goal = [
@@ -31,12 +25,6 @@ goal = [
 # ]
 
 initial = []
-
-# initial = [
-#     [2, 1, 4],
-#     [0, 6, 8],
-#     [3, 5, 7]
-# ]
 
 quiet = False
 
@@ -68,6 +56,10 @@ def getNeighbors(state):
     neighbors = []
     emptySpace = getEmptySpace(state)
 
+    # Neighbor above
+    if emptySpace[0] - 1 >= 0:
+        neighbors.append((emptySpace[0] - 1, emptySpace[1]))
+
     # Neighbor below
     if emptySpace[0] + 1 < rows:
         neighbors.append((emptySpace[0] + 1, emptySpace[1]))
@@ -79,10 +71,6 @@ def getNeighbors(state):
     # Neighbor right
     if emptySpace[1] + 1 < columns:
         neighbors.append((emptySpace[0], emptySpace[1] + 1))
-
-    # Neighbor above
-    if emptySpace[0] - 1 >= 0:
-        neighbors.append((emptySpace[0] - 1, emptySpace[1]))
     
     # print(neighbors)
     return neighbors
@@ -133,6 +121,7 @@ def neighborInExplored(neighbor, explored):
     failCount = 0
     matches = False
     for exploredList in explored:
+        failCount = 0
         for i in range(rows):
             for j in range(columns):
                 if exploredList[i][j] != neighbor[i][j]:
@@ -198,7 +187,6 @@ def bfs(initial):
             tempFrontier = Queue()
             tempFrontier = deepcopy(frontier)
             if not neighborInExplored(neighbor, explored) and not neighborInExplored(neighbor, frontierList):
-            # if neighbor not in explored:
                 frontier.addtoq(neighbor)
                 frontierList.append(neighbor)       
     return "FAILURE"
@@ -221,7 +209,8 @@ def dfs(initial):
         # Add it to explored
         explored.append(state)
 
-        printState(state)
+        if not quiet:
+            printState(state)
 
         # Check if the current state is the goal state
         if goalTest(state):
@@ -229,10 +218,9 @@ def dfs(initial):
 
         # Get options from current state and neighbors
         options = buildOptions(state)
-        
+        # print(options)
         for neighbor in options:
             if not neighborInExplored(neighbor, explored) and not neighborInExplored(neighbor, frontierList):
-                # print("ADDED TO STACK")
                 frontier.add(neighbor)
                 frontierList.append(neighbor)
     return "FAILURE"
